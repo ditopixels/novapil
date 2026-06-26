@@ -476,13 +476,13 @@
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                                     {PRODUCTS.map((product) => (
-                                        <article key={product.id} className="bg-surface rounded-3xl border border-outline-variant/30 overflow-hidden shadow-sm hover:shadow-md transition-all">
+                                        <article key={product.id} className="bg-surface rounded-3xl border border-outline-variant/30 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col h-full">
                                             <img className="w-full h-64 object-cover" src={product.image} alt={product.name} />
-                                            <div className="p-6">
+                                            <div className="p-6 flex flex-col flex-1">
                                                 <h3 className="text-xl font-bold text-on-surface mb-2">{product.name}</h3>
                                                 <p className="text-on-surface-variant text-sm mb-4 leading-relaxed">{product.title}</p>
                                                 <p className="text-primary font-bold text-lg mb-4">{formatCOP(product.price)}</p>
-                                                <Link to={`/product/${product.id}`} className="inline-flex items-center justify-center w-full bg-primary text-white px-4 py-3 rounded-full font-bold hover:opacity-90 transition-all">
+                                                <Link to={`/product/${product.id}`} className="inline-flex items-center justify-center w-full bg-primary text-white px-4 py-3 rounded-full font-bold hover:opacity-90 transition-all mt-auto">
                                                     Ver producto
                                                 </Link>
                                             </div>
