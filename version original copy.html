@@ -4,10 +4,6 @@
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>Novapil-MD | Biotecnología Capilar</title>
-    <meta name="description" content="Novapil-MD: champú seborregulador, champú anticaída y loción anticaída con checkout seguro de Wompi."/>
-    <meta name="robots" content="index,follow"/>
-    <link rel="canonical" href="https://novapil.com.co/"/>
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
@@ -125,152 +121,20 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect, useMemo } = React;
+        const { useState, useEffect } = React;
         const { createRoot } = ReactDOM;
-        const { HashRouter, Routes, Route, Link, useNavigate, useLocation, useParams } = ReactRouterDOM;
-
-        const WOMPI_CONFIG = {
-            publicKey: "pub_prod_rGskpfz7gQPAQcRrWS3Gx3RdSLiABPWs",
-            integritySecret: "prod_integrity_4SAlLpSi3TYs8o5RuYC8hEktPywvr6za",
-            redirectUrl: "https://novapil.com.co/",
-            checkoutBase: "https://checkout.wompi.co/p/"
-        };
-
-        const PRODUCTS = [
-            {
-                id: "champu-seborregulador",
-                shortCode: "",
-                name: "CHAMPÚ SEBORREGULADOR",
-                title: "Despídete de la grasa, la caspa y la picazón desde el primer lavado",
-                subtitle: "Recupera la sensación de un cuero cabelludo limpio, fresco y saludable.",
-                description: "Con el Champú Seborregulador recupera la sensación de un cuero cabelludo limpio, fresco y saludable. Su fórmula de grado médico elimina el exceso de grasa, combate la caspa y ayuda a controlar la dermatitis seborreica sin resecar tu cabello.",
-                bullets: [
-                    "Tu cabello se engrasa muy rápido.",
-                    "Tienes caspa o picazón frecuente.",
-                    "Sientes el cuero cabelludo pesado o sucio pocas horas después de lavarlo."
-                ],
-                price: 99000,
-                compareAt: 120000,
-                image: "assets/HAIRCLINIC0353.jpg.webp",
-                thumbs: [
-                    "assets/HAIRCLINIC0353.jpg.webp",
-                    "assets/HAIRCLINIC0375.jpg.webp",
-                    "assets/HAIRCLINIC0399.jpg.webp"
-                ]
-            },
-            {
-                id: "champu-anticaida",
-                shortCode: "",
-                name: "CHAMPÚ ANTICAÍDA (Nutrición y Fortalecimiento)",
-                title: "¿Sientes que cada día tienes menos cabello?",
-                subtitle: "No esperes a que la caída avance.",
-                description: "El Champú Anticaída (Nutrición y Fortalecimiento) ayuda a fortalecer la fibra capilar desde el lavado para que tu cabello luzca más fuerte, saludable y resistente con el uso constante.",
-                bullets: [
-                    "Se te cae más cabello de lo normal.",
-                    "Sientes que tu cabello está más delgado o débil.",
-                    "Quieres fortalecer tu cabello desde el lavado."
-                ],
-                price: 109000,
-                compareAt: 139000,
-                image: "assets/HAIRCLINIC0364.jpg.webp",
-                thumbs: [
-                    "assets/HAIRCLINIC0364.jpg.webp",
-                    "assets/HAIRCLINIC0402.jpg.webp",
-                    "assets/HAIRCLINIC0399.jpg.webp"
-                ]
-            },
-            {
-                id: "locion-anticaida-locion-5",
-                shortCode: "",
-                name: "LOCIÓN ANTICAÍDA (Loción 5)",
-                title: "Menos caída. Más crecimiento. Más confianza.",
-                subtitle: "Aplica diariamente la Loción Anticaída (Loción 5) sobre el cuero cabelludo.",
-                description: "Esta te ayudará a fortalecer tu cabello desde la raíz para que crezca con más fuerza y vitalidad.",
-                bullets: [
-                    "La caída del cabello se ha vuelto más evidente en los últimos meses.",
-                    "Buscas estimular el crecimiento sin irritar tu cuero cabelludo.",
-                    "Quieres complementar tu tratamiento capilar con una solución de uso diario."
-                ],
-                price: 120000,
-                compareAt: 150000,
-                image: "assets/HAIRCLINIC0407.jpg.webp",
-                thumbs: [
-                    "assets/HAIRCLINIC0407.jpg.webp",
-                    "assets/HAIRCLINIC0369.jpg.webp",
-                    "assets/HAIRCLINIC0397.jpg.webp"
-                ]
-            }
-        ];
-
-        const formatCOP = (value) =>
-            new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 }).format(value);
-
-        const sha256Hex = async (input) => {
-            const encoded = new TextEncoder().encode(input);
-            const hashBuffer = await crypto.subtle.digest("SHA-256", encoded);
-            return Array.from(new Uint8Array(hashBuffer)).map((b) => b.toString(16).padStart(2, "0")).join("");
-        };
-
-        const startWompiCheckout = async (product) => {
-            if (!WOMPI_CONFIG.publicKey.startsWith("pub_")) {
-                window.alert("Configura WOMPI_CONFIG.publicKey con tu llave pública de Wompi.");
-                return;
-            }
-
-            if (!WOMPI_CONFIG.integritySecret || WOMPI_CONFIG.integritySecret.includes("REEMPLAZAR")) {
-                window.alert("Configura WOMPI_CONFIG.integritySecret para generar la firma en frontend.");
-                return;
-            }
-
-            const expirationTime = new Date(Date.now() + 10 * 60 * 1000).toISOString();
-            const reference = `NOVAPIL-${product.id}-${Date.now()}`;
-            const amountInCents = product.price * 100;
-
-            const signatureChain = `${reference}${amountInCents}COP${expirationTime}${WOMPI_CONFIG.integritySecret}`;
-            const integrity = await sha256Hex(signatureChain);
-
-            const form = document.createElement("form");
-            form.method = "GET";
-            form.action = WOMPI_CONFIG.checkoutBase;
-
-            const fields = {
-                "public-key": WOMPI_CONFIG.publicKey,
-                currency: "COP",
-                "amount-in-cents": String(amountInCents),
-                reference,
-                "signature:integrity": integrity,
-                "redirect-url": WOMPI_CONFIG.redirectUrl,
-                "expiration-time": expirationTime
-            };
-
-            Object.entries(fields).forEach(([name, value]) => {
-                const input = document.createElement("input");
-                input.type = "hidden";
-                input.name = name;
-                input.value = value;
-                form.appendChild(input);
-            });
-
-            document.body.appendChild(form);
-            form.submit();
-            form.remove();
-        };
+        const { MemoryRouter, Routes, Route, Link, useNavigate, useLocation } = ReactRouterDOM;
 
         // --- Common Components ---
 
         const Navbar = () => {
             const [scrolled, setScrolled] = useState(false);
-            const [mobileOpen, setMobileOpen] = useState(false);
             const navigate = useNavigate();
 
             useEffect(() => {
                 const handleScroll = () => setScrolled(window.scrollY > 20);
                 window.addEventListener('scroll', handleScroll);
                 return () => window.removeEventListener('scroll', handleScroll);
-            }, []);
-
-            useEffect(() => {
-                setMobileOpen(false);
             }, []);
 
             return (
@@ -281,34 +145,18 @@
                             Novapil-MD
                         </Link>
                         <div className="hidden md:flex gap-8 items-center font-medium text-sm">
-                            <Link className="text-on-surface-variant hover:text-primary transition-colors" to="/product/locion-anticaida-locion-5">Productos</Link>
+                            <Link className="text-on-surface-variant hover:text-primary transition-colors" to="/product">Productos</Link>
                             <a className="text-on-surface-variant hover:text-primary transition-colors" href="#activos">Activos</a>
                             <a className="text-on-surface-variant hover:text-primary transition-colors" href="#comofunciona">Cómo Funciona</a>
                             <a className="text-on-surface-variant hover:text-primary transition-colors" href="#faq">FAQ</a>
                             <a className="text-on-surface-variant hover:text-primary transition-colors" href="#testimonios">Testimonios</a>
                         </div>
-                        <div className="hidden md:block">
-                            <button onClick={() => navigate('/product/locion-anticaida-locion-5')} className="bg-primary text-white px-6 py-2.5 rounded-full font-semibold hover:opacity-90 transition-all shadow-sm">
+                        <div>
+                            <button className="bg-primary text-white px-6 py-2.5 rounded-full font-semibold hover:opacity-90 transition-all shadow-sm">
                                 Comprar Ahora
                             </button>
                         </div>
-                        <button
-                            type="button"
-                            onClick={() => setMobileOpen((v) => !v)}
-                            className="md:hidden w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-primary"
-                            aria-label="Abrir menú"
-                        >
-                            <span className="material-symbols-outlined">{mobileOpen ? 'close' : 'menu'}</span>
-                        </button>
                     </div>
-                    {mobileOpen && (
-                        <div className="md:hidden px-margin-mobile pb-4 flex flex-col gap-3 bg-surface-container-lowest border-t border-outline-variant/40">
-                            <Link onClick={() => setMobileOpen(false)} className="text-on-surface-variant hover:text-primary transition-colors pt-3" to="/product/locion-anticaida-locion-5">Productos</Link>
-                            <a onClick={() => setMobileOpen(false)} className="text-on-surface-variant hover:text-primary transition-colors" href="#activos">Activos</a>
-                            <a onClick={() => setMobileOpen(false)} className="text-on-surface-variant hover:text-primary transition-colors" href="#comofunciona">Cómo Funciona</a>
-                            <a onClick={() => setMobileOpen(false)} className="text-on-surface-variant hover:text-primary transition-colors" href="#testimonios">Testimonios</a>
-                        </div>
-                    )}
                 </nav>
             );
         };
@@ -369,7 +217,7 @@
                                         Soluciones biotecnológicas premium para el sector mayorista capilar con innovación científica de vanguardia.
                                     </p>
                                     <div className="flex gap-4 items-center mt-4">
-                                        <Link to="/product/locion-anticaida-locion-5" className="group flex items-center gap-4">
+                                        <Link to="/product" className="group flex items-center gap-4">
                                             <div className="w-14 h-14 bg-secondary text-white rounded-full flex items-center justify-center group-hover:bg-primary transition-all shadow-lg transform group-hover:translate-x-2">
                                                 <span className="material-symbols-outlined">arrow_forward</span>
                                             </div>
@@ -380,7 +228,7 @@
                                 <div className="md:col-span-7 relative mt-12 md:mt-0">
                                     <div className="absolute inset-0 bg-primary/5 rounded-3xl transform rotate-3 scale-105"></div>
                                     <img className="w-full h-auto rounded-3xl object-cover shadow-2xl mask-rounded relative z-10" 
-                                        src="assets/HAIRCLINIC0399.jpg.webp" 
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDI1izX-j8KNPlvf2p3yXjvSTStEzrXy1nU9yiff30itNa4bofbdWE6qzPdKFt-oHRRs-lEqHXTYOOSwuP7_iKPqLhnj74i5Q1d8cn1zFAJbj3h8QkG2i-3o6V4F8mm8dtlrTNsbC4HuL1yMSfCTKhp2dRqC9K1oggCKd3d0P6hO-9h7tHOpTQydijY53-S5NcKvgIFChB3MjSqWC4ewAhbD7JJRE8fOxd5O9I99a86vVy6RAKFyUx4fre7mIBVDLgp194FWpmkwErZ" 
                                         alt="Novapil Products" />
                                 </div>
                             </div>
@@ -415,7 +263,7 @@
                                 </div>
                                 <div className="relative h-[400px] md:h-[600px]">
                                     <img className="w-full h-full object-cover rounded-3xl shadow-xl absolute inset-0 mask-l-shape" 
-                                        src="assets/HAIRCLINIC0397.jpg.webp" 
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsqkSSIg_vzAuOlp63SpdEX_UQCS5szhJrJhi97YRkvg8pUouh3QWTrlSZMTfqYBSXQP8EsLJr0Dzx-h9IrrkEOBkiABNSSktHHlZbUXJyPqDTZW2idZRy_iMcR6Jmuqp8jevsRVn20ArFlSZErxMd95h4x3svB4hn5zjJ7VS4IW_2ar5yZgcgwYqfulM5pYS_pzn2qcBhkz7TOGUXzcTM0nZUPj3419h27AM6J3MyoKMmqbvJVtF4Vlb4Bvy5xm5nZVfnUjHlnQSg" 
                                         alt="Clinical Environment" />
                                 </div>
                             </div>
@@ -451,7 +299,7 @@
                                     </div>
                                     <div className="relative min-h-[350px]">
                                         <img className="absolute inset-0 w-full h-full object-cover" 
-                                            src="assets/HAIRCLINIC0402.jpg.webp" 
+                                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgmzI2iw5aJFrNBEsW7GVd_4sZC5ud6jsYrB2yG3tg6v-TJa0gVVi5F0BQCRTosnqn-yy289-FAoF3IAUfME9A3hQJF63QfBPfC-6slFvnrL7vgZMWjywyKmEImWUscUVniYIBQn5k77UPYNsZ-Q9cisMqPmI6x9AMSmPROhNR5tDnYLw0cP4hkPCmvFemBmI1jmuzfR1vo83p5PxR99TLuud3dxz0FAa_rbeCOjoetIodzgDSTsskEdc1XdoNh4G5rXQJCFj6ppdU" 
                                             alt="Professional Support" />
                                     </div>
                                 </div>
@@ -465,11 +313,6 @@
 
         const ProductPage = () => {
             const [stickyVisible, setStickyVisible] = useState(false);
-            const { productId } = useParams();
-
-            const activeProduct = useMemo(() => {
-                return PRODUCTS.find((item) => item.id === productId) || PRODUCTS[2];
-            }, [productId]);
 
             useEffect(() => {
                 const handleScroll = () => setStickyVisible(window.scrollY > 500);
@@ -490,7 +333,7 @@
                                         <span className="material-symbols-outlined text-[14px]">timer</span> Oferta limitada
                                     </span>
                                 </div>
-                                <h1 className="text-5xl md:text-6xl font-bold text-primary tracking-tight">{activeProduct.name}</h1>
+                                <h1 className="text-5xl md:text-6xl font-bold text-primary tracking-tight">LOCIÓN 5</h1>
                                 <div className="flex items-center gap-3">
                                     <div className="flex text-tertiary">
                                         {[1,2,3,4].map(i => <span key={i} className="material-symbols-outlined fill-current text-sm">star</span>)}
@@ -498,15 +341,17 @@
                                     </div>
                                     <span className="text-sm font-medium text-on-surface-variant">4.9/5 (120+ reseñas)</span>
                                 </div>
-                                <p className="text-lg text-on-surface-variant leading-relaxed">{activeProduct.description}</p>
+                                <p className="text-lg text-on-surface-variant leading-relaxed">
+                                    Desarrollada para ser el aliado principal en terapias anti caída, la Loción 5 combina la potencia de la ciencia médica con la suavidad de los extractos naturales.
+                                </p>
                                 <div className="flex items-center gap-4">
-                                    <span className="text-4xl font-bold text-on-surface">{formatCOP(activeProduct.price)}</span>
-                                    <span className="text-on-surface-variant text-lg line-through">{formatCOP(activeProduct.compareAt)}</span>
+                                    <span className="text-4xl font-bold text-on-surface">$120.000 COP</span>
+                                    <span className="text-on-surface-variant text-lg line-through">$150.000 COP</span>
                                 </div>
                                 <div className="flex flex-col gap-4 mt-2">
-                                    <button onClick={() => startWompiCheckout(activeProduct)} className="w-full bg-primary text-white px-8 py-5 rounded-2xl font-bold hover:shadow-xl hover:opacity-95 transition-all flex justify-center items-center gap-2 animate-pulse-subtle">
+                                    <button className="w-full bg-primary text-white px-8 py-5 rounded-2xl font-bold hover:shadow-xl hover:opacity-95 transition-all flex justify-center items-center gap-2 animate-pulse-subtle">
                                         <span className="material-symbols-outlined">shopping_cart</span>
-                                        Comprar con Wompi - {formatCOP(activeProduct.price)}
+                                        Agregar al carrito - $120.000 COP
                                     </button>
                                     <div className="flex justify-center flex-wrap gap-x-8 gap-y-4 text-on-surface-variant">
                                         <div className="flex items-center gap-1 text-xs font-bold uppercase tracking-wider"><span className="material-symbols-outlined text-primary text-base">local_shipping</span> Envío Gratis</div>
@@ -525,46 +370,17 @@
                             <div className="order-1 md:order-2 relative">
                                 <div className="absolute inset-0 bg-primary-fixed rounded-3xl transform rotate-6 scale-105 opacity-40 blur-2xl z-0"></div>
                                 <img className="w-full h-auto object-cover rounded-3xl shadow-2xl relative z-10" 
-                                    src={activeProduct.image}
-                                    alt={activeProduct.name} />
-                                <div className="grid grid-cols-3 gap-3 mt-4">
-                                    {activeProduct.thumbs.map((thumb, idx) => (
-                                        <img key={idx} className="w-full h-24 object-cover rounded-xl border border-outline-variant/40" src={thumb} alt={`${activeProduct.name} miniatura ${idx + 1}`} />
-                                    ))}
-                                </div>
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKtZkrnflN0qEeTNUYhbX3BbXp9r-mnL-rEUEdhZlHKWb39i2GQcIzF8tMaD0-dL7QL-WtpsQEmmy0DEU-WhrnmrGhd_zkZpYu4BNm-YCOD3q4hxuz9u-XTslRc4LpNvs1KohQxJTDHqkZxwBLRusgRbomIIvW6k2OW_NHcfchuVZ0NQzzQpzzb4_Cj5X-0RJILJzssi-sYZBOwM5mkG7Gquual9VoH3mY8z5J7o46QHqyeJnwBynXQsPbDQqU-L_FBYV1RrKfwIph" 
+                                    alt="Loción 5 Bottle" />
                             </div>
                         </header>
-
-                        <section className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop pb-10">
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                {PRODUCTS.map((product) => (
-                                    <Link
-                                        key={product.id}
-                                        to={`/product/${product.id}`}
-                                        className={`p-4 rounded-2xl border transition-all ${product.id === activeProduct.id ? 'border-primary bg-primary/10' : 'border-outline-variant/40 bg-surface'}`}
-                                    >
-                                        <p className="text-xs uppercase tracking-wider text-on-surface-variant font-bold mb-1">{product.shortCode}</p>
-                                        <h3 className="font-bold text-on-surface text-sm md:text-base">{product.name}</h3>
-                                        <p className="text-primary font-bold mt-2">{formatCOP(product.price)}</p>
-                                    </Link>
-                                ))}
-                            </div>
-                        </section>
 
                         {/* Ingredients Bento */}
                         <section className="py-24 bg-surface-container-lowest border-y border-outline-variant/20" id="activos">
                             <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
                                 <div className="text-center mb-16">
-                                    <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">{activeProduct.title}</h2>
-                                    <p className="text-on-surface-variant max-w-2xl mx-auto leading-relaxed">{activeProduct.subtitle}</p>
-                                </div>
-                                <div className="max-w-2xl mx-auto mb-10">
-                                    <h3 className="font-bold text-on-surface mb-3 text-lg">Esto es para ti si:</h3>
-                                    <ul className="space-y-2">
-                                        {activeProduct.bullets.map((item, idx) => (
-                                            <li key={idx} className="text-on-surface-variant">✅ {item}</li>
-                                        ))}
-                                    </ul>
+                                    <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Novapil-MD: Nutrición y Fortalecimiento</h2>
+                                    <p className="text-on-surface-variant max-w-2xl mx-auto leading-relaxed">Nuestra fórmula exclusiva utiliza ingredientes de vanguardia para asegurar resultados clínicos sin comprometer la salud del cuero cabelludo.</p>
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
                                     {[
@@ -658,14 +474,14 @@
                     {/* Desktop Sticky Header */}
                     <div className={`fixed top-0 left-0 right-0 bg-surface border-b border-outline-variant/30 shadow-lg p-4 z-[60] hidden md:flex items-center transition-all duration-500 transform ${stickyVisible ? 'translate-y-0' : '-translate-y-full'}`}>
                         <div className="flex items-center gap-4 max-w-container-max mx-auto w-full px-margin-desktop">
-                            <h3 className="font-bold text-primary text-xl">{activeProduct.name}</h3>
+                            <h3 className="font-bold text-primary text-xl">Loción 5</h3>
                             <div className="flex text-tertiary text-sm">
                                 {[1,2,3,4,5].map(s => <span key={s} className="material-symbols-outlined fill-current text-sm">star</span>)}
                             </div>
                             <div className="flex-grow"></div>
-                            <span className="font-bold text-on-surface text-xl">{formatCOP(activeProduct.price)}</span>
-                            <button onClick={() => startWompiCheckout(activeProduct)} className="bg-primary text-white px-8 py-2.5 rounded-full font-bold hover:opacity-90 transition-all ml-4">
-                                Comprar con Wompi
+                            <span className="font-bold text-on-surface text-xl">$120.000 COP</span>
+                            <button className="bg-primary text-white px-8 py-2.5 rounded-full font-bold hover:opacity-90 transition-all ml-4">
+                                Agregar al carrito
                             </button>
                         </div>
                     </div>
@@ -673,11 +489,11 @@
                     {/* Mobile Sticky CTA */}
                     <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-outline-variant/30 shadow-[0_-4px_20px_rgba(0,0,0,0.1)] p-5 z-50 md:hidden flex justify-between items-center gap-4">
                         <div>
-                            <p className="font-bold text-primary text-xs uppercase tracking-wider">{activeProduct.shortCode}</p>
-                            <p className="text-on-surface font-bold text-lg">{formatCOP(activeProduct.price)}</p>
+                            <p className="font-bold text-primary text-xs uppercase tracking-wider">Loción 5</p>
+                            <p className="text-on-surface font-bold text-lg">$120.000 COP</p>
                         </div>
-                        <button onClick={() => startWompiCheckout(activeProduct)} className="bg-primary text-white px-10 py-3 rounded-full font-bold shadow-lg hover:opacity-90 transition-all">
-                            Comprar
+                        <button className="bg-primary text-white px-10 py-3 rounded-full font-bold shadow-lg hover:opacity-90 transition-all">
+                            Añadir
                         </button>
                     </div>
                 </div>
@@ -695,16 +511,15 @@
                 <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/product" element={<ProductPage />} />
-                    <Route path="/product/:productId" element={<ProductPage />} />
                 </Routes>
             );
         };
 
         const root = createRoot(document.getElementById('root'));
         root.render(
-            <HashRouter>
+            <MemoryRouter>
                 <App />
-            </HashRouter>
+            </MemoryRouter>
         );
     </script>
 </body>
