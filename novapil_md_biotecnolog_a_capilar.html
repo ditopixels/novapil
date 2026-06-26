@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Novapil MD | Tratamientos Capilares con Respaldo Medico</title>
+  <meta name="description" content="Descubre los tratamientos capilares Novapil MD: Champu Seborregulador, Champu Anticaida y Locion 5. Compra segura con checkout de Wompi y respaldo de MD Hair Clinic." />
+  <meta name="robots" content="index,follow" />
+  <meta name="author" content="Novapil MD" />
+  <meta name="theme-color" content="#1b7ec5" />
+  <meta name="keywords" content="novapil, tratamiento capilar, champu seborregulador, champu anticaida, locion anticaida, wompi, md hair clinic" />
+  <link rel="canonical" href="https://novapil.com.co/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_CO" />
+  <meta property="og:title" content="Novapil MD | Tratamientos Capilares" />
+  <meta property="og:description" content="Linea capilar con respaldo medico: controla grasa, fortalece la fibra capilar y estimula crecimiento." />
+  <meta property="og:url" content="https://novapil.com.co/" />
+  <meta property="og:image" content="assets/HAIRCLINIC0399.jpg.webp" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Novapil MD | Tratamientos Capilares" />
+  <meta name="twitter:description" content="Compra tus productos Novapil MD con checkout seguro de Wompi." />
+  <meta name="twitter:image" content="assets/HAIRCLINIC0399.jpg.webp" />
+
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Novapil MD",
+    "url": "https://novapil.com.co",
+    "logo": "https://novapil.com.co/assets/logo.jpg"
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Novapil MD",
+    "url": "https://novapil.com.co"
+  }
+  </script>
+
+  <style>
+    :root {
+      --brand-blue: #1b7ec5;
+      --brand-blue-deep: #0e4a7b;
+      --brand-mint: #79d7c4;
+      --surface: #f6fbff;
+      --text: #0f2031;
+      --text-soft: #4d6478;
+      --line: #d3e3ef;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Nunito Sans", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% 5%, rgba(121, 215, 196, 0.22), transparent 30%),
+        radial-gradient(circle at 88% 0%, rgba(27, 126, 197, 0.22), transparent 34%),
+        linear-gradient(180deg, #fafdff 0%, #f1f8ff 100%);
+    }
+
+    h1, h2, h3, h4 {
+      font-family: "Montserrat", sans-serif;
+      letter-spacing: -0.02em;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(8px);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      animation: reveal 0.65s ease forwards;
+    }
+
+    .delay-1 { animation-delay: 0.08s; }
+    .delay-2 { animation-delay: 0.16s; }
+    .delay-3 { animation-delay: 0.24s; }
+
+    @keyframes reveal {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .mobile-menu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+
+    .mobile-menu.open {
+      max-height: 320px;
+    }
+
+    .hero-image {
+      box-shadow: 0 20px 70px rgba(13, 67, 115, 0.28);
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/history@5/umd/history.development.js"></script>
+  <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.development.js"></script>
+  <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.development.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+  <script type="text/babel">
+    const { useMemo, useState } = React;
+    const { createRoot } = ReactDOM;
+    const {
+      HashRouter,
+      Routes,
+      Route,
+      Link,
+      useNavigate,
+      useParams,
+      useLocation
+    } = ReactRouterDOM;
+
+    const WOMPI_CONFIG = {
+      publicKey: "pub_test_REEMPLAZAR_POR_LLAVE_REAL",
+      redirectUrl: "https://novapil.com.co/",
+      signatureEndpoint: "/api/wompi/signature",
+      checkoutBase: "https://checkout.wompi.co/p/"
+    };
+
+    const PRODUCTS = [
+      {
+        id: "champu-seborregulador",
+        shortCode: "P1",
+        name: "CHAMPU SEBORREGULADOR",
+        price: 99000,
+        sku: "NOVA-P1-SEBO",
+        image: "assets/HAIRCLINIC0353.jpg.webp",
+        gallery: [
+          "assets/HAIRCLINIC0353.jpg.webp",
+          "assets/HAIRCLINIC0375.jpg.webp",
+          "assets/HAIRCLINIC0399.jpg.webp"
+        ],
+        title: "Despidete de la grasa, la caspa y la picazon desde el primer lavado",
+        subtitle: "Con el Champu Seborregulador recupera la sensacion de un cuero cabelludo limpio, fresco y saludable.",
+        copy: "Su formula de grado medico elimina el exceso de grasa, combate la caspa y ayuda a controlar la dermatitis seborreica sin resecar tu cabello.",
+        bullets: [
+          "Tu cabello se engrasa muy rapido.",
+          "Tienes caspa o picazon frecuente.",
+          "Sientes el cuero cabelludo pesado o sucio pocas horas despues de lavarlo."
+        ]
+      },
+      {
+        id: "champu-anticaida",
+        shortCode: "P2",
+        name: "CHAMPU ANTICAIDA (NUTRICION Y FORTALECIMIENTO)",
+        price: 109000,
+        sku: "NOVA-P2-ANTI",
+        image: "assets/HAIRCLINIC0364.jpg.webp",
+        gallery: [
+          "assets/HAIRCLINIC0364.jpg.webp",
+          "assets/HAIRCLINIC0402.jpg.webp",
+          "assets/HAIRCLINIC0399.jpg.webp"
+        ],
+        title: "Sientes que cada dia tienes menos cabello?",
+        subtitle: "No esperes a que la caida avance.",
+        copy: "El Champu Anticaida (Nutricion y Fortalecimiento) ayuda a fortalecer la fibra capilar desde el lavado para que tu cabello luzca mas fuerte, saludable y resistente con el uso constante.",
+        bullets: [
+          "Se te cae mas cabello de lo normal.",
+          "Sientes que tu cabello esta mas delgado o debil.",
+          "Quieres fortalecer tu cabello desde el lavado."
+        ]
+      },
+      {
+        id: "locion-anticaida-locion-5",
+        shortCode: "P3",
+        name: "LOCION ANTICAIDA (LOCION 5)",
+        price: 120000,
+        sku: "NOVA-P3-LOC5",
+        image: "assets/HAIRCLINIC0407.jpg.webp",
+        gallery: [
+          "assets/HAIRCLINIC0407.jpg.webp",
+          "assets/HAIRCLINIC0369.jpg.webp",
+          "assets/HAIRCLINIC0397.jpg.webp"
+        ],
+        title: "Menos caida. Mas crecimiento. Mas confianza.",
+        subtitle: "Aplica diariamente la Locion Anticaida (Locion 5) sobre el cuero cabelludo.",
+        copy: "Te ayudara a fortalecer tu cabello desde la raiz para que crezca con mas fuerza y vitalidad.",
+        bullets: [
+          "La caida del cabello se ha vuelto mas evidente en los ultimos meses.",
+          "Buscas estimular el crecimiento sin irritar tu cuero cabelludo.",
+          "Quieres complementar tu tratamiento capilar con una solucion de uso diario."
+        ]
+      }
+    ];
+
+    function formatPrice(cop) {
+      return new Intl.NumberFormat("es-CO", {
+        style: "currency",
+        currency: "COP",
+        maximumFractionDigits: 0
+      }).format(cop);
+    }
+
+    async function startWompiCheckout(product) {
+      if (!WOMPI_CONFIG.publicKey.includes("pub_")) {
+        window.alert("Configura WOMPI_CONFIG.publicKey con tu llave de Wompi.");
+        return;
+      }
+
+      const expirationTime = new Date(Date.now() + 10 * 60 * 1000).toISOString();
+      const reference = `${product.sku}-${Date.now()}`;
+      const amountInCents = product.price * 100;
+
+      try {
+        const response = await fetch(WOMPI_CONFIG.signatureEndpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            reference,
+            amountInCents,
+            currency: "COP",
+            expirationTime,
+            productId: product.id
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error("No se pudo obtener la firma de integridad.");
+        }
+
+        const { signature } = await response.json();
+
+        if (!signature) {
+          throw new Error("Respuesta de firma invalida.");
+        }
+
+        const params = new URLSearchParams({
+          "public-key": WOMPI_CONFIG.publicKey,
+          currency: "COP",
+          "amount-in-cents": String(amountInCents),
+          reference,
+          "signature:integrity": signature,
+          "redirect-url": WOMPI_CONFIG.redirectUrl,
+          "expiration-time": expirationTime
+        });
+
+        window.location.href = `${WOMPI_CONFIG.checkoutBase}?${params.toString()}`;
+      } catch (err) {
+        console.error(err);
+        window.alert("No fue posible iniciar el checkout. Verifica el endpoint de firma en backend.");
+      }
+    }
+
+    function ProductJsonLd() {
+      const json = {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        itemListElement: PRODUCTS.map((p, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          item: {
+            "@type": "Product",
+            name: p.name,
+            image: `https://novapil.com.co/${p.image}`,
+            sku: p.sku,
+            brand: { "@type": "Brand", name: "Novapil MD" },
+            offers: {
+              "@type": "Offer",
+              priceCurrency: "COP",
+              price: p.price,
+              availability: "https://schema.org/InStock",
+              url: `https://novapil.com.co/producto/${p.id}`
+            }
+          }
+        }))
+      };
+
+      return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(json) }} />;
+    }
+
+    function Header() {
+      const [menuOpen, setMenuOpen] = useState(false);
+      const location = useLocation();
+      const navClass = "text-sm font-semibold text-slate-700 hover:text-sky-700 transition-colors";
+
+      function closeMenu() {
+        setMenuOpen(false);
+      }
+
+      React.useEffect(() => {
+        closeMenu();
+      }, [location.pathname]);
+
+      return (
+        <header className="sticky top-0 z-50 border-b border-slate-200/70 glass">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6">
+            <div className="h-16 flex items-center justify-between gap-4">
+              <Link to="/" className="flex items-center gap-3">
+                <img src="assets/logo.jpg" alt="Novapil MD logo" className="w-10 h-10 rounded-full object-cover border border-slate-200" />
+                <div>
+                  <p className="text-xs text-slate-500 font-semibold leading-none">MD Hair Clinic</p>
+                  <p className="text-base font-extrabold text-sky-900 leading-none mt-1">Novapil MD</p>
+                </div>
+              </Link>
+
+              <nav className="hidden md:flex items-center gap-8">
+                <a href="#productos" className={navClass}>Productos</a>
+                <a href="#beneficios" className={navClass}>Beneficios</a>
+                <a href="#soporte" className={navClass}>Soporte</a>
+              </nav>
+
+              <div className="hidden md:block">
+                <a href="#productos" className="inline-flex items-center rounded-full bg-sky-700 hover:bg-sky-800 px-5 py-2.5 text-white text-sm font-bold shadow">
+                  Comprar ahora
+                </a>
+              </div>
+
+              <button
+                type="button"
+                className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg border border-slate-300"
+                onClick={() => setMenuOpen((prev) => !prev)}
+                aria-label="Abrir menu"
+                aria-expanded={menuOpen}
+              >
+                <span className="text-xl">{menuOpen ? "x" : "="}</span>
+              </button>
+            </div>
+          </div>
+
+          <div className={`md:hidden mobile-menu ${menuOpen ? "open" : ""} border-t border-slate-200`}>
+            <div className="px-4 py-4 space-y-3 bg-white/95">
+              <a href="#productos" onClick={closeMenu} className="block text-sm font-semibold text-slate-700">Productos</a>
+              <a href="#beneficios" onClick={closeMenu} className="block text-sm font-semibold text-slate-700">Beneficios</a>
+              <a href="#soporte" onClick={closeMenu} className="block text-sm font-semibold text-slate-700">Soporte</a>
+              <a href="#productos" onClick={closeMenu} className="inline-flex rounded-full bg-sky-700 px-4 py-2 text-white text-sm font-bold">Comprar ahora</a>
+            </div>
+          </div>
+        </header>
+      );
+    }
+
+    function Footer() {
+      return (
+        <footer id="soporte" className="mt-20 border-t border-slate-200 bg-white/90">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 grid gap-8 md:grid-cols-3">
+            <div>
+              <h3 className="text-lg font-extrabold text-sky-900">Novapil MD</h3>
+              <p className="text-sm text-slate-600 mt-3 leading-relaxed">
+                Tratamientos capilares con respaldo medico. Linea desarrollada por MD Hair Clinic.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-sm font-bold text-slate-900">Pagos</h4>
+              <p className="text-sm text-slate-600 mt-3">
+                Checkout web con Wompi. Tiempo maximo por intento de pago: 10 minutos.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-sm font-bold text-slate-900">Dominio y despliegue</h4>
+              <p className="text-sm text-slate-600 mt-3">
+                Listo para publicar en GitHub y conectar dominio desde GoDaddy.
+              </p>
+            </div>
+          </div>
+        </footer>
+      );
+    }
+
+    function ProductCard({ product }) {
+      return (
+        <article className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow reveal">
+          <img src={product.image} alt={product.name} className="w-full h-64 object-cover" loading="lazy" />
+          <div className="p-6">
+            <p className="text-xs font-bold text-slate-500 tracking-[0.12em]">{product.shortCode}</p>
+            <h3 className="mt-2 text-xl font-extrabold text-slate-900 leading-snug">{product.name}</h3>
+            <p className="mt-2 text-sm text-slate-600 leading-relaxed">{product.title}</p>
+            <p className="mt-4 text-xl font-extrabold text-sky-800">{formatPrice(product.price)}</p>
+            <div className="mt-5 flex gap-3">
+              <Link
+                to={`/producto/${product.id}`}
+                className="inline-flex items-center justify-center rounded-full bg-slate-900 hover:bg-slate-950 px-4 py-2 text-white text-sm font-bold"
+              >
+                Ver detalle
+              </Link>
+              <button
+                onClick={() => startWompiCheckout(product)}
+                className="inline-flex items-center justify-center rounded-full bg-sky-700 hover:bg-sky-800 px-4 py-2 text-white text-sm font-bold"
+              >
+                Comprar
+              </button>
+            </div>
+          </div>
+        </article>
+      );
+    }
+
+    function HomePage() {
+      return (
+        <React.Fragment>
+          <ProductJsonLd />
+          <main>
+            <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16 pb-10">
+              <div className="grid lg:grid-cols-2 gap-10 items-center">
+                <div className="reveal">
+                  <p className="inline-flex bg-sky-100 text-sky-800 text-xs font-bold px-3 py-1 rounded-full">Linea profesional capilar</p>
+                  <h1 className="mt-5 text-4xl sm:text-5xl font-extrabold text-slate-900 leading-tight">
+                    Tratamientos capilares Novapil MD para cuero cabelludo y crecimiento saludable
+                  </h1>
+                  <p className="mt-5 text-base sm:text-lg text-slate-600 leading-relaxed max-w-xl">
+                    Tres productos, una estrategia completa: control de grasa, fortalecimiento y estimulacion del crecimiento.
+                  </p>
+                  <div className="mt-8 flex flex-wrap gap-3">
+                    <a href="#productos" className="inline-flex rounded-full bg-sky-700 hover:bg-sky-800 px-6 py-3 text-white text-sm font-bold">Ver productos</a>
+                    <Link to="/producto/locion-anticaida-locion-5" className="inline-flex rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-bold text-slate-800">Ver PDP</Link>
+                  </div>
+                </div>
+
+                <div className="reveal delay-1">
+                  <img
+                    src="assets/HAIRCLINIC0399.jpg.webp"
+                    alt="Catalogo Novapil MD"
+                    className="hero-image rounded-[2rem] w-full object-cover"
+                  />
+                </div>
+              </div>
+            </section>
+
+            <section id="beneficios" className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+              <div className="grid md:grid-cols-3 gap-5">
+                {[
+                  { t: "Respaldo medico", d: "Formulas desarrolladas con experiencia clinica MD Hair Clinic." },
+                  { t: "Pago seguro", d: "Checkout de Wompi con redireccion y expiracion controlada." },
+                  { t: "Rutina integral", d: "Productos complementarios para higiene, nutricion y crecimiento." }
+                ].map((item, idx) => (
+                  <article key={item.t} className={`bg-white border border-slate-200 rounded-2xl p-6 reveal delay-${idx + 1}`}>
+                    <h2 className="text-lg font-extrabold text-slate-900">{item.t}</h2>
+                    <p className="mt-2 text-sm text-slate-600 leading-relaxed">{item.d}</p>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            <section id="productos" className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
+              <div className="flex items-end justify-between gap-4 mb-8">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.16em] font-bold text-slate-500">Catalogo actual</p>
+                  <h2 className="mt-2 text-3xl font-extrabold text-slate-900">Nuestros 3 productos</h2>
+                </div>
+              </div>
+
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {PRODUCTS.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+            </section>
+          </main>
+        </React.Fragment>
+      );
+    }
+
+    function ProductPage() {
+      const { id } = useParams();
+      const product = useMemo(() => PRODUCTS.find((p) => p.id === id), [id]);
+      const navigate = useNavigate();
+
+      if (!product) {
+        return (
+          <main className="max-w-4xl mx-auto px-4 py-16">
+            <h1 className="text-2xl font-extrabold text-slate-900">Producto no encontrado</h1>
+            <button onClick={() => navigate("/")} className="mt-4 rounded-full bg-sky-700 text-white px-5 py-2 font-bold">Volver al inicio</button>
+          </main>
+        );
+      }
+
+      return (
+        <main className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+          <button onClick={() => navigate("/")} className="text-sm font-bold text-slate-600 hover:text-slate-900">
+            {"<- Volver al catalogo"}
+          </button>
+
+          <section className="mt-6 grid lg:grid-cols-2 gap-10 items-start">
+            <div>
+              <img src={product.gallery[0]} alt={product.name} className="w-full rounded-3xl object-cover border border-slate-200" />
+              <div className="mt-4 grid grid-cols-3 gap-3">
+                {product.gallery.map((img, index) => (
+                  <img key={index} src={img} alt={`${product.name} ${index + 1}`} className="w-full h-28 rounded-2xl object-cover border border-slate-200" loading="lazy" />
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <p className="text-xs font-bold tracking-[0.15em] text-slate-500">{product.shortCode}</p>
+              <h1 className="mt-2 text-3xl sm:text-4xl font-extrabold text-slate-900 leading-tight">{product.name}</h1>
+              <p className="mt-4 text-xl font-bold text-sky-800">{product.title}</p>
+              <p className="mt-3 text-base text-slate-600 leading-relaxed">{product.subtitle}</p>
+              <p className="mt-3 text-base text-slate-600 leading-relaxed">{product.copy}</p>
+
+              <div className="mt-6 p-5 bg-sky-50 border border-sky-100 rounded-2xl">
+                <p className="text-sm font-bold text-sky-900">Esto es para ti si:</p>
+                <ul className="mt-3 space-y-2 text-sm text-slate-700">
+                  {product.bullets.map((bullet) => (
+                    <li key={bullet}>- {bullet}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mt-8 flex flex-wrap items-center gap-4">
+                <p className="text-3xl font-extrabold text-slate-900">{formatPrice(product.price)}</p>
+                <button
+                  onClick={() => startWompiCheckout(product)}
+                  className="inline-flex items-center justify-center rounded-full bg-sky-700 hover:bg-sky-800 px-7 py-3 text-white text-sm font-bold"
+                >
+                  Comprar con Wompi
+                </button>
+              </div>
+
+              <p className="mt-4 text-xs text-slate-500 leading-relaxed">
+                Este boton envia al Web Checkout de Wompi (fuera del sitio), con expiracion de 10 minutos y redireccion a https://novapil.com.co.
+              </p>
+            </div>
+          </section>
+        </main>
+      );
+    }
+
+    function App() {
+      return (
+        <React.Fragment>
+          <Header />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/producto/:id" element={<ProductPage />} />
+          </Routes>
+          <Footer />
+        </React.Fragment>
+      );
+    }
+
+    const root = createRoot(document.getElementById("root"));
+    root.render(
+      <HashRouter>
+        <App />
+      </HashRouter>
+    );
+  </script>
+</body>
+</html>
