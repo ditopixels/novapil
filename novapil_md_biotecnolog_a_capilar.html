@@ -94,7 +94,7 @@
         }
     </script>
     <style>
-        body { font-family: 'Manrope', sans-serif; }
+        body { font-family: 'Manrope', sans-serif; overflow-x: hidden; }
         .mask-l-shape {
             clip-path: polygon(0 0, 100% 0, 100% 70%, 70% 100%, 0 100%);
         }
@@ -261,7 +261,23 @@
         const Navbar = () => {
             const [scrolled, setScrolled] = useState(false);
             const [mobileOpen, setMobileOpen] = useState(false);
+            const navigate = useNavigate();
             const { pathname } = useLocation();
+
+            const goToHomeSection = (sectionId) => {
+                const scrollToSection = () => {
+                    const section = document.getElementById(sectionId);
+                    if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                };
+
+                if (pathname !== '/') {
+                    navigate('/');
+                    setTimeout(scrollToSection, 80);
+                    return;
+                }
+
+                scrollToSection();
+            };
 
             useEffect(() => {
                 const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -282,8 +298,9 @@
                         </Link>
                         <div className="hidden md:flex gap-8 items-center font-medium text-sm">
                             <Link className="text-on-surface-variant hover:text-primary transition-colors" to="/">Inicio</Link>
-                            <Link className="text-on-surface-variant hover:text-primary transition-colors" to="/product/locion-anticaida-locion-5">Productos</Link>
-                            <Link className="text-on-surface-variant hover:text-primary transition-colors" to="/gracias">Gracias</Link>
+                            <button onClick={() => goToHomeSection('productos-home')} className="text-on-surface-variant hover:text-primary transition-colors">Productos</button>
+                            <button onClick={() => goToHomeSection('faq')} className="text-on-surface-variant hover:text-primary transition-colors">FAQ</button>
+                            <button onClick={() => goToHomeSection('testimonios')} className="text-on-surface-variant hover:text-primary transition-colors">Testimonios</button>
                         </div>
                         <button
                             type="button"
@@ -297,8 +314,9 @@
                     {mobileOpen && (
                         <div className="md:hidden px-margin-mobile pb-4 flex flex-col gap-3 bg-surface-container-lowest border-t border-outline-variant/40">
                             <Link onClick={() => setMobileOpen(false)} className="text-on-surface-variant hover:text-primary transition-colors pt-3" to="/">Inicio</Link>
-                            <Link onClick={() => setMobileOpen(false)} className="text-on-surface-variant hover:text-primary transition-colors pt-3" to="/product/locion-anticaida-locion-5">Productos</Link>
-                            <Link onClick={() => setMobileOpen(false)} className="text-on-surface-variant hover:text-primary transition-colors" to="/gracias">Gracias</Link>
+                            <button onClick={() => { setMobileOpen(false); goToHomeSection('productos-home'); }} className="text-on-surface-variant hover:text-primary transition-colors pt-3 text-left">Productos</button>
+                            <button onClick={() => { setMobileOpen(false); goToHomeSection('faq'); }} className="text-on-surface-variant hover:text-primary transition-colors text-left">FAQ</button>
+                            <button onClick={() => { setMobileOpen(false); goToHomeSection('testimonios'); }} className="text-on-surface-variant hover:text-primary transition-colors text-left">Testimonios</button>
                         </div>
                     )}
                 </nav>
@@ -361,12 +379,12 @@
                                         Soluciones biotecnológicas premium para el sector mayorista capilar con innovación científica de vanguardia.
                                     </p>
                                     <div className="flex gap-4 items-center mt-4">
-                                        <Link to="/product/locion-anticaida-locion-5" className="group flex items-center gap-4">
+                                        <button onClick={() => document.getElementById('productos-home')?.scrollIntoView({ behavior: 'smooth', block: 'start' })} className="group flex items-center gap-4">
                                             <div className="w-14 h-14 bg-secondary text-white rounded-full flex items-center justify-center group-hover:bg-primary transition-all shadow-lg transform group-hover:translate-x-2">
                                                 <span className="material-symbols-outlined">arrow_forward</span>
                                             </div>
                                             <span className="font-bold text-primary">Ver Catálogo</span>
-                                        </Link>
+                                        </button>
                                     </div>
                                 </div>
                                 <div className="md:col-span-7 relative mt-12 md:mt-0">
@@ -571,7 +589,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div className="order-1 md:order-2 relative">
+                            <div className="order-1 md:order-2 relative overflow-hidden rounded-3xl">
                                 <div className="absolute inset-0 bg-primary-fixed rounded-3xl transform rotate-6 scale-105 opacity-40 blur-2xl z-0"></div>
                                 <img className="w-full h-auto object-cover rounded-3xl shadow-2xl relative z-10" 
                                     src={activeProduct.image}
