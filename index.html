@@ -98,7 +98,13 @@
                         { n: 3, title: 'Enjuaga', text: 'Enjuaga con abundante agua. Repite la aplicación si es necesario.' }
                     ]
                 },
-                safety: 'Fórmula libre de sal, diseñada para el uso frecuente en cueros cabelludos grasos, con caspa o con dermatitis seborreica, sin resecar la fibra capilar.'
+                safety: 'Fórmula libre de sal, diseñada para el uso frecuente en cueros cabelludos grasos, con caspa o con dermatitis seborreica, sin resecar la fibra capilar.',
+                shortName: 'el Champú Seborregulador',
+                testimonials: [
+                    { name: 'Carolina R.', initial: 'CR', text: '"Antes tenía que lavarme el cabello todos los días porque se engrasaba enseguida. Con el Champú Seborregulador ahora aguanta fresco dos o tres días."' },
+                    { name: 'Andrés M.', initial: 'AM', text: '"La caspa y la picazón me tenían desesperado. Desde la primera semana noté el cuero cabelludo más limpio y sin descamación."' },
+                    { name: 'Laura G.', initial: 'LG', text: '"Me lo recomendó mi dermatóloga para la dermatitis seborreica. No reseca, huele suave y el frasco rinde mucho."' }
+                ]
             },
             {
                 id: "champu-anticaida",
@@ -135,7 +141,13 @@
                         { n: 3, title: 'Enjuaga', text: 'Enjuaga con abundante agua. Repite la aplicación si es necesario.' }
                     ]
                 },
-                safety: 'Fórmula libre de sulfatos, apta para el uso diario y para cueros cabelludos sensibles. Ideal como complemento de la Loción 5.'
+                safety: 'Fórmula libre de sulfatos, apta para el uso diario y para cueros cabelludos sensibles. Limpia sin agredir la fibra capilar ni el cuero cabelludo.',
+                shortName: 'el Champú Nutrición',
+                testimonials: [
+                    { name: 'Diana P.', initial: 'DP', text: '"Se me caía muchísimo cabello al peinarme. Llevo dos meses con el Champú Nutrición y en la almohada y el cepillo se nota la diferencia."' },
+                    { name: 'Felipe S.', initial: 'FS', text: '"Mi cabello estaba delgado y sin vida. Ahora lo siento más grueso y con más cuerpo. Es el único champú que uso desde entonces."' },
+                    { name: 'Marcela T.', initial: 'MT', text: '"Recomendado por mi dermatólogo. No irrita, deja el cabello suave y sin esa sensación de resequedad de otros champús."' }
+                ]
             },
             {
                 id: "locion-anticaida-locion-5",
@@ -172,7 +184,13 @@
                         { n: 3, title: 'Masajea', text: 'Realiza un suave masaje con las yemas de los dedos. No enjuagar.' }
                     ]
                 },
-                safety: 'Su perfil de alta tolerancia la hace apta incluso para pacientes con cuero cabelludo sensible o en periodos especiales como la lactancia. Libre de alcohol y de fácil absorción.'
+                safety: 'Su perfil de alta tolerancia la hace apta incluso para pacientes con cuero cabelludo sensible o en periodos especiales como la lactancia. Libre de alcohol y de fácil absorción.',
+                shortName: 'la Loción 5',
+                testimonials: [
+                    { name: 'María C.', initial: 'MC', text: '"Llevo 3 meses usando la Loción 5 y la diferencia es increíble. Mi cabello se siente más fuerte y he notado crecimiento en áreas clareas."' },
+                    { name: 'Juan P.', initial: 'JP', text: '"Lo que más me gusta es que no irrita. Mi cuero cabelludo es súper sensible y con Novapil cero problemas y muy buenos resultados."' },
+                    { name: 'Ana Lucía', initial: 'AL', text: '"Recomendado por mi dermatólogo. La textura no es grasosa, huele bien y el frasco dura bastante. Muy recomendado."' }
+                ]
             }
         ];
 
@@ -695,14 +713,10 @@
                             <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
                                 <div className="text-center mb-16">
                                     <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">Testimonios Reales</h2>
-                                    <p className="text-on-surface-variant max-w-2xl mx-auto leading-relaxed">Descubre cómo la Loción 5 ha transformado la rutina capilar de nuestros pacientes.</p>
+                                    <p className="text-on-surface-variant max-w-2xl mx-auto leading-relaxed">Descubre cómo {activeProduct.shortName} ha transformado la rutina capilar de nuestros pacientes.</p>
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                                    {[
-                                        { name: 'María C.', initial: 'MC', text: '"Llevo 3 meses usando la Loción 5 y la diferencia es increíble. Mi cabello se siente más fuerte y he notado crecimiento en áreas clareas."' },
-                                        { name: 'Juan P.', initial: 'JP', text: '"Lo que más me gusta es que no irrita. Mi cuero cabelludo es súper sensible y con Novapil cero problemas y muy buenos resultados."' },
-                                        { name: 'Ana Lucía', initial: 'AL', text: '"Recomendado por mi dermatólogo. La textura no es grasosa, huele bien y el frasco dura bastante. Muy recomendado."' }
-                                    ].map((test, i) => (
+                                    {activeProduct.testimonials.map((test, i) => (
                                         <div key={i} className="bg-surface p-8 rounded-3xl border border-outline-variant/30 shadow-sm flex flex-col justify-between">
                                             <div>
                                                 <div className="flex text-tertiary mb-6">
