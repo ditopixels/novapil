@@ -120,6 +120,7 @@
     <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.development.js"></script>
     <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.development.js"></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="shipping.js"></script>
 </head>
 <body class="bg-background text-on-background antialiased">
     <div id="root"></div>
@@ -136,6 +137,12 @@
             checkoutBase: "https://checkout.wompi.co/p/"
         };
 
+        const CONTACT = {
+            phoneDisplay: "302 339 4032",
+            phoneE164: "+573023394032",
+            whatsappUrl: "https://wa.me/573023394032"
+        };
+
         const PRODUCTS = [
             {
                 id: "champu-seborregulador",
@@ -149,14 +156,30 @@
                     "Tienes caspa o picazón frecuente.",
                     "Sientes el cuero cabelludo pesado o sucio pocas horas después de lavarlo."
                 ],
-                price: 99000,
+                price: 92000,
                 compareAt: 120000,
                 image: "assets/HAIRCLINIC0353.jpg.webp",
                 thumbs: [
                     "assets/HAIRCLINIC0353.jpg.webp",
                     "assets/HAIRCLINIC0375.jpg.webp",
                     "assets/HAIRCLINIC0399.jpg.webp"
-                ]
+                ],
+                ingredients: [
+                    { icon: 'eco', title: 'Saw Palmetto', subtitle: 'Extracto Natural', text: 'Ayuda a regular la producción de sebo y a controlar la acción de la DHT sobre el folículo.' },
+                    { icon: 'local_florist', title: 'CBD Liposomado', subtitle: 'Biotecnología', text: 'Calma la inflamación y la picazón del cuero cabelludo con un efecto sedante prolongado.' },
+                    { icon: 'science', title: 'Ácido Salicílico', subtitle: 'Exfoliante Suave', text: 'Elimina el exceso de grasa y las escamas de caspa, dejando el cuero cabelludo limpio y despejado.' },
+                    { icon: 'shield', title: 'Climbazol & Xilitol', subtitle: 'Acción Antifúngica', text: 'Combaten el hongo responsable de la caspa y ayudan a mantener la hidratación del cuero cabelludo.' }
+                ],
+                howItWorks: {
+                    title: '¿Cómo funciona el Champú Seborregulador?',
+                    intro: 'Un lavado de grado médico fácil de integrar en tu rutina para un cuero cabelludo fresco y equilibrado.',
+                    steps: [
+                        { n: 1, title: 'Moja', text: 'Humedece bien el cabello y el cuero cabelludo con agua tibia.' },
+                        { n: 2, title: 'Aplica y masajea', text: 'Aplica una cantidad suficiente y masajea suavemente el cuero cabelludo durante 2 a 3 minutos.' },
+                        { n: 3, title: 'Enjuaga', text: 'Enjuaga con abundante agua. Repite la aplicación si es necesario.' }
+                    ]
+                },
+                safety: 'Fórmula libre de sal, diseñada para el uso frecuente en cueros cabelludos grasos, con caspa o con dermatitis seborreica, sin resecar la fibra capilar.'
             },
             {
                 id: "champu-anticaida",
@@ -170,14 +193,30 @@
                     "Sientes que tu cabello está más delgado o débil.",
                     "Quieres fortalecer tu cabello desde el lavado."
                 ],
-                price: 109000,
+                price: 108000,
                 compareAt: 139000,
                 image: "assets/HAIRCLINIC0364.jpg.webp",
                 thumbs: [
                     "assets/HAIRCLINIC0364.jpg.webp",
-                    "assets/HAIRCLINIC0402.jpg.webp",
-                    "assets/HAIRCLINIC0399.jpg.webp"
-                ]
+                    "assets/HAIRCLINIC0397.jpg.webp",
+                    "assets/HAIRCLINIC0375.jpg.webp"
+                ],
+                ingredients: [
+                    { icon: 'science', title: 'Pyrrolidinyl', subtitle: '(Grado Farmacéutico)', text: 'Estimula la fase de crecimiento sin irritaciones, descamación o efectos secundarios.' },
+                    { icon: 'local_florist', title: 'CBD Liposomado', subtitle: 'Biotecnología', text: 'Controla la inflamación folicular, permitiendo un crecimiento saludable y efecto calmante.' },
+                    { icon: 'eco', title: 'Saw Palmetto', subtitle: 'Extracto Natural', text: 'Ayuda a bloquear la acción de la DHT, una de las principales causas del debilitamiento del cabello.' },
+                    { icon: 'bolt', title: 'Extracto de Romero & Cafeína', subtitle: 'Activadores Naturales', text: 'Aumentan la irrigación sanguínea en el folículo y energizan la raíz para un cabello más fuerte.' }
+                ],
+                howItWorks: {
+                    title: '¿Cómo funciona el Champú Nutrición?',
+                    intro: 'Un lavado de grado médico fácil de integrar en tu rutina para fortalecer el cabello desde la raíz.',
+                    steps: [
+                        { n: 1, title: 'Moja', text: 'Humedece bien el cabello y el cuero cabelludo con agua tibia.' },
+                        { n: 2, title: 'Aplica y masajea', text: 'Aplica una cantidad suficiente y masajea suavemente el cuero cabelludo durante 2 a 3 minutos.' },
+                        { n: 3, title: 'Enjuaga', text: 'Enjuaga con abundante agua. Repite la aplicación si es necesario.' }
+                    ]
+                },
+                safety: 'Fórmula libre de sulfatos, apta para el uso diario y para cueros cabelludos sensibles. Ideal como complemento de la Loción 5.'
             },
             {
                 id: "locion-anticaida-locion-5",
@@ -191,16 +230,40 @@
                     "Buscas estimular el crecimiento sin irritar tu cuero cabelludo.",
                     "Quieres complementar tu tratamiento capilar con una solución de uso diario."
                 ],
-                price: 120000,
+                price: 116000,
                 compareAt: 150000,
                 image: "assets/HAIRCLINIC0407.jpg.webp",
                 thumbs: [
                     "assets/HAIRCLINIC0407.jpg.webp",
                     "assets/HAIRCLINIC0369.jpg.webp",
-                    "assets/HAIRCLINIC0397.jpg.webp"
-                ]
+                    "assets/HAIRCLINIC0402.jpg.webp"
+                ],
+                ingredients: [
+                    { icon: 'science', title: 'Pyrrolidinyl', subtitle: '(Grado Farmacéutico)', text: 'Estimula la fase de crecimiento sin irritaciones, descamación o efectos secundarios.' },
+                    { icon: 'eco', title: 'Biotina Cuaternizada', subtitle: 'Vitamina B7', text: 'Refuerza la producción de queratina y se fija a la fibra capilar para un cabello más resistente.' },
+                    { icon: 'local_florist', title: 'CBD Liposomado', subtitle: 'Biotecnología', text: 'Controla la inflamación folicular, permitiendo un crecimiento saludable y efecto calmante.' },
+                    { icon: 'bolt', title: 'Extracto de Romero', subtitle: 'Activador Natural', text: 'Aumenta la irrigación sanguínea en el folículo y estimula el crecimiento del cabello.' }
+                ],
+                howItWorks: {
+                    title: '¿Cómo funciona la Loción 5?',
+                    intro: 'Un tratamiento fácil de integrar en tu rutina diaria para resultados visibles.',
+                    steps: [
+                        { n: 1, title: 'Prepara', text: 'Asegúrate de tener el cuero cabelludo limpio y seco antes de la aplicación.' },
+                        { n: 2, title: 'Aplica', text: 'Aplica de tres a cuatro puff directamente sobre las zonas donde deseas estimular el crecimiento.' },
+                        { n: 3, title: 'Masajea', text: 'Realiza un suave masaje con las yemas de los dedos. No enjuagar.' }
+                    ]
+                },
+                safety: 'Su perfil de alta tolerancia la hace apta incluso para pacientes con cuero cabelludo sensible o en periodos especiales como la lactancia. Libre de alcohol y de fácil absorción.'
             }
         ];
+
+        const DEPARTMENTS = Object.keys(SHIPPING.departments).sort((a, b) => a.localeCompare(b, "es"));
+
+        const getShippingForDepartment = (department) => {
+            if (!department) return null;
+            const tierKey = SHIPPING.departments[department] || SHIPPING.defaultTier;
+            return { key: tierKey, ...SHIPPING.tiers[tierKey] };
+        };
 
         const formatCOP = (value) =>
             new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 }).format(value);
@@ -211,7 +274,12 @@
             return Array.from(new Uint8Array(hashBuffer)).map((b) => b.toString(16).padStart(2, "0")).join("");
         };
 
-        const startWompiCheckout = async (product) => {
+        const startWompiCheckout = async (product, shipping) => {
+            if (!shipping) {
+                window.alert("Selecciona tu departamento de envío para continuar con la compra.");
+                return;
+            }
+
             if (!WOMPI_CONFIG.publicKey.startsWith("pub_")) {
                 window.alert("Configura WOMPI_CONFIG.publicKey con tu llave pública de Wompi.");
                 return;
@@ -223,8 +291,8 @@
             }
 
             const expirationTime = new Date(Date.now() + 10 * 60 * 1000).toISOString();
-            const reference = `NOVAPIL-${product.id}-${Date.now()}`;
-            const amountInCents = product.price * 100;
+            const reference = `NOVAPIL-${product.id}-${shipping.key}-${Date.now()}`;
+            const amountInCents = (product.price + shipping.price) * 100;
 
             const signatureChain = `${reference}${amountInCents}COP${expirationTime}${WOMPI_CONFIG.integritySecret}`;
             const integrity = await sha256Hex(signatureChain);
@@ -301,6 +369,7 @@
                             <button onClick={() => goToHomeSection('productos-home')} className="text-on-surface-variant hover:text-primary transition-colors">Productos</button>
                             <button onClick={() => goToHomeSection('faq')} className="text-on-surface-variant hover:text-primary transition-colors">FAQ</button>
                             <button onClick={() => goToHomeSection('testimonios')} className="text-on-surface-variant hover:text-primary transition-colors">Testimonios</button>
+                            <button onClick={() => goToHomeSection('contacto')} className="text-on-surface-variant hover:text-primary transition-colors">Contacto</button>
                         </div>
                         <button
                             type="button"
@@ -317,6 +386,7 @@
                             <button onClick={() => { setMobileOpen(false); goToHomeSection('productos-home'); }} className="text-on-surface-variant hover:text-primary transition-colors pt-3 text-left">Productos</button>
                             <button onClick={() => { setMobileOpen(false); goToHomeSection('faq'); }} className="text-on-surface-variant hover:text-primary transition-colors text-left">FAQ</button>
                             <button onClick={() => { setMobileOpen(false); goToHomeSection('testimonios'); }} className="text-on-surface-variant hover:text-primary transition-colors text-left">Testimonios</button>
+                            <button onClick={() => { setMobileOpen(false); goToHomeSection('contacto'); }} className="text-on-surface-variant hover:text-primary transition-colors text-left">Contacto</button>
                         </div>
                     )}
                 </nav>
@@ -349,8 +419,8 @@
                             </div>
                             <div className="flex flex-col gap-3">
                                 <h4 className="font-bold text-on-surface mb-1">Contacto</h4>
-                                <a href="#" className="text-on-surface-variant hover:text-primary transition-colors">Soporte</a>
-                                <a href="#" className="text-on-surface-variant hover:text-primary transition-colors">Distribuidores</a>
+                                <a href={`tel:${CONTACT.phoneE164}`} className="text-on-surface-variant hover:text-primary transition-colors">{CONTACT.phoneDisplay}</a>
+                                <a href={CONTACT.whatsappUrl} target="_blank" rel="noopener noreferrer" className="text-on-surface-variant hover:text-primary transition-colors">WhatsApp</a>
                             </div>
                         </div>
                     </div>
@@ -432,31 +502,31 @@
                         </section>
 
                         {/* Distribution CTA Section */}
-                        <section className="py-24 bg-surface-container-highest">
+                        <section className="py-24 bg-surface-container-highest" id="contacto">
                             <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
                                 <div className="bg-surface-lowest rounded-[40px] shadow-sm overflow-hidden grid md:grid-cols-2">
                                     <div className="p-12 md:p-16 flex flex-col justify-center">
                                         <h2 className="text-3xl font-bold text-on-background mb-4 leading-tight">Inicie su distribución hoy</h2>
                                         <p className="text-on-surface-variant mb-10">Nuestro equipo médico y comercial está listo para asesorarle en la implementación de la línea Novapil-MD.</p>
                                         <div className="space-y-6">
-                                            <div className="flex items-center gap-6 group">
+                                            <a href={`tel:${CONTACT.phoneE164}`} className="flex items-center gap-6 group">
                                                 <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors">
                                                     <span className="material-symbols-outlined text-primary group-hover:text-white">call</span>
                                                 </div>
                                                 <div>
-                                                    <p className="text-[10px] text-on-surface-variant uppercase tracking-widest mb-1">Línea Comercial</p>
-                                                    <p className="text-xl font-bold text-on-background">315 437 5197</p>
+                                                    <p className="text-[10px] text-on-surface-variant uppercase tracking-widest mb-1">Línea comercial y asesoría médica</p>
+                                                    <p className="text-xl font-bold text-on-background">{CONTACT.phoneDisplay}</p>
                                                 </div>
-                                            </div>
-                                            <div className="flex items-center gap-6 group">
+                                            </a>
+                                            <a href={CONTACT.whatsappUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-6 group">
                                                 <div className="w-14 h-14 rounded-2xl bg-secondary/10 flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition-colors">
-                                                    <span className="material-symbols-outlined text-secondary group-hover:text-white">support_agent</span>
+                                                    <span className="material-symbols-outlined text-secondary group-hover:text-white">chat</span>
                                                 </div>
                                                 <div>
-                                                    <p className="text-[10px] text-on-surface-variant uppercase tracking-widest mb-1">Asesoría Médica</p>
-                                                    <p className="text-xl font-bold text-on-background">314 207 62 44</p>
+                                                    <p className="text-[10px] text-on-surface-variant uppercase tracking-widest mb-1">Escríbenos por WhatsApp</p>
+                                                    <p className="text-xl font-bold text-on-background">{CONTACT.phoneDisplay}</p>
                                                 </div>
-                                            </div>
+                                            </a>
                                         </div>
                                     </div>
                                     <div className="relative min-h-[350px]">
@@ -513,7 +583,7 @@
                                         },
                                         {
                                             q: '¿Dónde solicito ayuda?',
-                                            a: 'En la sección de contacto encontrarás los números comerciales y de asesoría médica.'
+                                            a: 'En la sección de contacto encontrarás el número comercial y de asesoría médica.'
                                         }
                                     ].map((item, idx) => (
                                         <article key={idx} className="bg-surface p-6 rounded-2xl border border-outline-variant/30">
@@ -537,6 +607,21 @@
             const activeProduct = useMemo(() => {
                 return PRODUCTS.find((item) => item.id === productId) || PRODUCTS[2];
             }, [productId]);
+
+            const [department, setDepartment] = useState("");
+            const shipping = useMemo(() => getShippingForDepartment(department), [department]);
+            const total = activeProduct.price + (shipping ? shipping.price : 0);
+            const checkout = () => {
+                if (!shipping) {
+                    const select = document.getElementById('departamento');
+                    if (select) {
+                        select.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        select.focus();
+                    }
+                    return;
+                }
+                startWompiCheckout(activeProduct, shipping);
+            };
 
             useEffect(() => {
                 const handleScroll = () => setStickyVisible(window.scrollY > 500);
@@ -571,12 +656,34 @@
                                     <span className="text-on-surface-variant text-lg line-through">{formatCOP(activeProduct.compareAt)}</span>
                                 </div>
                                 <div className="flex flex-col gap-4 mt-2">
-                                    <button onClick={() => startWompiCheckout(activeProduct)} className="w-full bg-primary text-white px-8 py-5 rounded-2xl font-bold hover:shadow-xl hover:opacity-95 transition-all flex justify-center items-center gap-2 animate-pulse-subtle">
+                                    <div className="flex flex-col gap-2">
+                                        <label htmlFor="departamento" className="text-xs font-bold uppercase tracking-wider text-on-surface-variant">Departamento de envío</label>
+                                        <select
+                                            id="departamento"
+                                            value={department}
+                                            onChange={(e) => setDepartment(e.target.value)}
+                                            className="w-full rounded-2xl border-outline-variant/40 bg-surface px-4 py-3 text-on-surface focus:border-primary focus:ring-primary"
+                                        >
+                                            <option value="">Selecciona tu departamento</option>
+                                            {DEPARTMENTS.map((name) => (
+                                                <option key={name} value={name}>{name}</option>
+                                            ))}
+                                        </select>
+                                        {shipping ? (
+                                            <div className="flex justify-between text-sm text-on-surface-variant px-1">
+                                                <span>{shipping.label}</span>
+                                                <span className="font-bold text-on-surface">{formatCOP(shipping.price)}</span>
+                                            </div>
+                                        ) : (
+                                            <p className="text-sm text-on-surface-variant px-1">Selecciona tu departamento para calcular el costo de envío.</p>
+                                        )}
+                                    </div>
+                                    <button onClick={checkout} className={`w-full bg-primary text-white px-8 py-5 rounded-2xl font-bold hover:shadow-xl hover:opacity-95 transition-all flex justify-center items-center gap-2 ${shipping ? 'animate-pulse-subtle' : 'opacity-70'}`}>
                                         <span className="material-symbols-outlined">shopping_cart</span>
-                                        Finalizar compra - {formatCOP(activeProduct.price)}
+                                        {shipping ? `Finalizar compra - ${formatCOP(total)}` : 'Finalizar compra'}
                                     </button>
                                     <div className="flex justify-center flex-wrap gap-x-8 gap-y-4 text-on-surface-variant">
-                                        <div className="flex items-center gap-1 text-xs font-bold uppercase tracking-wider"><span className="material-symbols-outlined text-primary text-base">local_shipping</span> Envío Gratis</div>
+                                        <div className="flex items-center gap-1 text-xs font-bold uppercase tracking-wider"><span className="material-symbols-outlined text-primary text-base">local_shipping</span> Envío a todo Colombia</div>
                                         <div className="flex items-center gap-1 text-xs font-bold uppercase tracking-wider"><span className="material-symbols-outlined text-primary text-base">lock</span> Pago Seguro</div>
                                         <div className="flex items-center gap-1 text-xs font-bold uppercase tracking-wider"><span className="material-symbols-outlined text-primary text-base">verified_user</span> Garantía 30 días</div>
                                     </div>
@@ -617,12 +724,8 @@
                                         ))}
                                     </ul>
                                 </div>
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-                                    {[
-                                        { icon: 'science', title: 'Pyrrolidinyl', subtitle: '(Grado Farmacéutico)', text: 'Estimula la fase de crecimiento sin irritaciones, descamación o efectos secundarios.' },
-                                        { icon: 'eco', title: 'Biotina & Romero', subtitle: 'Extractos Naturales', text: 'Refuerzan la producción de queratina y aumentan la irrigación sanguínea en el folículo.' },
-                                        { icon: 'local_florist', title: 'Cannabis Liposomado', subtitle: 'Biotecnología', text: 'Controla la inflamación folicular, permitiendo un crecimiento saludable y efecto calmante.' }
-                                    ].map((item, i) => (
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                                    {activeProduct.ingredients.map((item, i) => (
                                         <div key={i} className="bg-surface p-8 rounded-3xl shadow-sm border border-outline-variant/20 hover:shadow-md transition-all group">
                                             <div className="w-14 h-14 bg-primary-fixed rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                                                 <span className="material-symbols-outlined text-primary text-2xl">{item.icon}</span>
@@ -639,7 +742,7 @@
                                     </div>
                                     <div>
                                         <h3 className="text-2xl font-bold mb-2">Seguridad y Tolerancia</h3>
-                                        <p className="text-white/80 leading-relaxed">Su perfil de alta tolerancia la hace apta incluso para pacientes con cuero cabelludo sensible o en periodos especiales como la lactancia.</p>
+                                        <p className="text-white/80 leading-relaxed">{activeProduct.safety}</p>
                                     </div>
                                 </div>
                             </div>
@@ -649,16 +752,12 @@
                         <section className="py-24 bg-surface-container-low" id="comofunciona">
                             <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
                                 <div className="text-center mb-20">
-                                    <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">¿Cómo funciona la Loción 5?</h2>
-                                    <p className="text-on-surface-variant max-w-2xl mx-auto">Un tratamiento fácil de integrar en tu rutina diaria para resultados visibles.</p>
+                                    <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">{activeProduct.howItWorks.title}</h2>
+                                    <p className="text-on-surface-variant max-w-2xl mx-auto">{activeProduct.howItWorks.intro}</p>
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
                                     <div className="hidden md:block absolute top-12 left-[15%] right-[15%] h-[2px] bg-primary/20 z-0"></div>
-                                    {[
-                                        { n: 1, title: 'Prepara', text: 'Asegúrate de tener el cuero cabelludo limpio y seco antes de la aplicación.' },
-                                        { n: 2, title: 'Aplica', text: 'Aplica la loción directamente sobre las zonas donde deseas estimular el crecimiento.' },
-                                        { n: 3, title: 'Masajea', text: 'Realiza un suave masaje con las yemas de los dedos. No enjuagar.' }
-                                    ].map((step, i) => (
+                                    {activeProduct.howItWorks.steps.map((step, i) => (
                                         <div key={i} className="relative z-10 flex flex-col items-center text-center group">
                                             <div className="w-24 h-24 bg-primary text-white rounded-full flex items-center justify-center text-4xl font-bold mb-8 shadow-xl border-[6px] border-surface-container-low transition-all group-hover:scale-105">
                                                 {step.n}
@@ -733,9 +832,9 @@
                                 {[1,2,3,4,5].map(s => <span key={s} className="material-symbols-outlined fill-current text-sm">star</span>)}
                             </div>
                             <div className="flex-grow"></div>
-                            <span className="font-bold text-on-surface text-xl">{formatCOP(activeProduct.price)}</span>
-                            <button onClick={() => startWompiCheckout(activeProduct)} className="bg-primary text-white px-8 py-2.5 rounded-full font-bold hover:opacity-90 transition-all ml-4">
-                                Finalizar compra
+                            <span className="font-bold text-on-surface text-xl">{formatCOP(total)}</span>
+                            <button onClick={checkout} className="bg-primary text-white px-8 py-2.5 rounded-full font-bold hover:opacity-90 transition-all ml-4">
+                                {shipping ? 'Finalizar compra' : 'Elige tu departamento'}
                             </button>
                         </div>
                     </div>
@@ -743,10 +842,10 @@
                     {/* Mobile Sticky CTA */}
                     <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-outline-variant/30 shadow-[0_-4px_20px_rgba(0,0,0,0.1)] p-5 z-50 md:hidden flex justify-between items-center gap-4">
                         <div>
-                            <p className="font-bold text-primary text-xs uppercase tracking-wider">{activeProduct.shortCode}</p>
-                            <p className="text-on-surface font-bold text-lg">{formatCOP(activeProduct.price)}</p>
+                            <p className="font-bold text-primary text-xs uppercase tracking-wider">{shipping ? 'Total con envío' : 'Elige tu departamento'}</p>
+                            <p className="text-on-surface font-bold text-lg">{formatCOP(total)}</p>
                         </div>
-                        <button onClick={() => startWompiCheckout(activeProduct)} className="bg-primary text-white px-10 py-3 rounded-full font-bold shadow-lg hover:opacity-90 transition-all">
+                        <button onClick={checkout} className="bg-primary text-white px-10 py-3 rounded-full font-bold shadow-lg hover:opacity-90 transition-all">
                             Comprar
                         </button>
                     </div>
