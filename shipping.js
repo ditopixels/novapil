@@ -1,9 +1,13 @@
-// Configuración de envíos de Novapil-MD.
+// Configuración de envíos de Novapil-MD. Origen de despacho: Tunja (Boyacá).
 // Este archivo se puede editar directamente en GitHub sin tocar el resto del sitio.
 //
 // 1. "tiers": las tarifas disponibles (precio en pesos colombianos, sin puntos).
 // 2. "departments": a qué tarifa pertenece cada departamento.
 //    Los valores posibles son las claves de "tiers": regional, nacional, extendido, especial.
+//    - regional:  Boyacá y departamentos vecinos con trayecto corto desde Tunja.
+//    - nacional:  capitales y ciudades principales con cobertura estándar de transportadora.
+//    - extendido: departamentos con trayecto largo o cobertura limitada.
+//    - especial:  zonas de difícil acceso (envío aéreo o fluvial).
 // 3. "defaultTier": tarifa que se usa si un departamento no aparece en la lista.
 
 const SHIPPING = {
@@ -17,32 +21,32 @@ const SHIPPING = {
     departments: {
         "Amazonas": "especial",
         "Antioquia": "nacional",
-        "Arauca": "nacional",
+        "Arauca": "extendido",
         "Atlántico": "nacional",
-        "Bogotá D.C.": "nacional",
+        "Bogotá D.C.": "regional",
         "Bolívar": "nacional",
-        "Boyacá": "nacional",
+        "Boyacá": "regional",
         "Caldas": "nacional",
-        "Caquetá": "nacional",
-        "Casanare": "nacional",
+        "Caquetá": "extendido",
+        "Casanare": "regional",
         "Cauca": "nacional",
         "Cesar": "nacional",
-        "Chocó": "nacional",
+        "Chocó": "extendido",
         "Córdoba": "nacional",
-        "Cundinamarca": "nacional",
+        "Cundinamarca": "regional",
         "Guainía": "especial",
         "Guaviare": "especial",
         "Huila": "nacional",
-        "La Guajira": "nacional",
+        "La Guajira": "extendido",
         "Magdalena": "nacional",
         "Meta": "nacional",
-        "Nariño": "nacional",
+        "Nariño": "extendido",
         "Norte de Santander": "nacional",
-        "Putumayo": "nacional",
+        "Putumayo": "extendido",
         "Quindío": "nacional",
         "Risaralda": "nacional",
         "San Andrés y Providencia": "especial",
-        "Santander": "nacional",
+        "Santander": "regional",
         "Sucre": "nacional",
         "Tolima": "nacional",
         "Valle del Cauca": "nacional",
